@@ -1,0 +1,21 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports: 
+      - '8080:80'
+    links:
+      - mysql:mysql
+    volumes:
+      - ./logs/apache:/var/log/apache2
+      - ./apache/sites-enabled:/etc/apache/sites-enabled
+      - ./public:/var/www/html
+  mysql:
+    image: 'mysql:5.7'
+    ports: 
+      - '3306:3306'
+    volumes:
+      - ./db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+
